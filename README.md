@@ -50,4 +50,4 @@
 3. Matcher kortene? De blir stående åpne / Cards match? They stay open.  
 4. Matcher ikke? Kortene snur seg tilbake / Cards don't match? They flip back.  
 5. Fortsett til alle par er funnet / Keep going until all pairs are found.  
-6. Trykk “Ny runde” / Press "New Game" for å starte på nytt / to restart.
+6. Trykk “Ny runde” for å starte på nytt / Press "New Game" to restart.
