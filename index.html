@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Arcade 🎮</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="arcade-frame">
+    <header>
+      <h1>🎮 Emoji Arcade</h1>
+      <button id="newGameBtn" class="arcade-btn">Ny runde 🔁</button>
+    </header>
+
+    <main>
+      <section id="status">
+        <p>Trekk: <span id="moves">0</span></p>
+        <p>Par funnet: <span id="matches">0</span>/6</p>
+      </section>
+
+      <section id="gameBoard" aria-label="Memory spillbrett"></section>
+
+      <div id="winMessage" class="hidden" role="alert">
+        ✨ DU VANT! ✨  
+        <p>Trykk “Ny runde” for å spille igjen</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>👾 Laget av <strong>Vilde Svenkesen</strong> | Emoji Arcade 2025</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
