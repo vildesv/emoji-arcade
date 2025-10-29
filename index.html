@@ -11,12 +11,17 @@
     <header>
       <h1>🎮 Emoji Arcade</h1>
       <button id="newGameBtn" class="arcade-btn">Ny runde 🔁</button>
+      <select id="difficultySelect" class="arcade-btn">
+        <option value="lett" selected>😸 Lett</option>
+        <option value="middels">🐯 Middels</option>
+        <option value="vanskelig">👾 Vanskelig</option>
+      </select>
     </header>
 
     <main>
       <section id="status">
         <p>Trekk: <span id="moves">0</span></p>
-        <p>Par funnet: <span id="matches">0</span>/6</p>
+        <p>Par funnet: <span id="matches">0</span></p>
       </section>
 
       <section id="gameBoard" aria-label="Memory spillbrett"></section>

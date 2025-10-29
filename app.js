@@ -1,5 +1,11 @@
 // 🎮 Emoji Arcade – Memory Game
-const emojis = ["🐱", "🐶", "🐸", "🐵", "🦊", "🐼"];
+const emojiSets = {
+  lett: ["🐱", "🐶", "🐸", "🐵", "🦊", "🐼"],
+  middels: ["🐱", "🐶", "🐸", "🐵", "🦊", "🐼", "🐰", "🐯"],
+  vanskelig: ["🐱", "🐶", "🐸", "🐵", "🦊", "🐼", "🐰", "🐯", "🐮", "🐷"]
+};
+
+let emojis = emojiSets.lett;
 let cards = [];
 let flippedCards = [];
 let matchedPairs = 0;
@@ -10,32 +16,36 @@ const movesDisplay = document.getElementById("moves");
 const matchesDisplay = document.getElementById("matches");
 const winMessage = document.getElementById("winMessage");
 const newGameBtn = document.getElementById("newGameBtn");
-
-// 🔊 Lyd (valgfritt – legg mp3 i prosjektmappen)
-const flipSound = new Audio("flip.mp3");
-const matchSound = new Audio("match.mp3");
-const winSound = new Audio("win.mp3");
+const difficultySelect = document.getElementById("difficultySelect");
 
 // 🎯 Start ny runde
 newGameBtn.addEventListener("click", startGame);
+difficultySelect.addEventListener("change", startGame);
 
 function startGame() {
-  // Nullstill state
+  const level = difficultySelect.value;
+  emojis = emojiSets[level];
+
+  // Nullstill
   board.innerHTML = "";
   winMessage.classList.add("hidden");
   moves = 0;
   matchedPairs = 0;
   flippedCards = [];
   movesDisplay.textContent = 0;
-  matchesDisplay.textContent = 0;
+  matchesDisplay.textContent = `0/${emojis.length}`;
 
-  // Stokk kortene og bygg brettet
+  // Stokk og bygg
   const shuffled = shuffle([...emojis, ...emojis]);
   cards = shuffled.map((emoji, index) => createCard(emoji, index));
   cards.forEach(card => board.appendChild(card));
+
+  // Oppdater grid
+  const columns = Math.ceil(Math.sqrt(emojis.length * 2));
+  board.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 }
 
-// 🃏 Lag kort-element
+// 🃏 Lag kort
 function createCard(emoji, index) {
   const card = document.createElement("button");
   card.classList.add("card");
@@ -51,28 +61,19 @@ function createCard(emoji, index) {
   return card;
 }
 
-// 🔀 Stokk kortene
+// 🔀 Stokk
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
 // 🔄 Vend kort
 function flipCard() {
-  // Ikke la spilleren flippe mer enn to kort
   if (flippedCards.length === 2 || this.classList.contains("flipped")) return;
 
-  // Spill lyd
-  if (flipSound) {
-    flipSound.currentTime = 0;
-    flipSound.play().catch(() => {});
-  }
-
-  // Vend kort
   this.textContent = this.dataset.emoji;
   this.classList.add("flipped");
   flippedCards.push(this);
 
-  // Hvis to kort er vendt – sjekk match
   if (flippedCards.length === 2) {
     moves++;
     movesDisplay.textContent = moves;
@@ -80,31 +81,22 @@ function flipCard() {
   }
 }
 
-// ✅ Sjekk om par matcher
+// ✅ Sjekk par
 function checkMatch() {
   const [card1, card2] = flippedCards;
   const isMatch = card1.dataset.emoji === card2.dataset.emoji;
 
   if (isMatch) {
-    // Spill lyd og marker match
-    if (matchSound) {
-      matchSound.currentTime = 0;
-      matchSound.play().catch(() => {});
-    }
-
     card1.classList.add("matched");
     card2.classList.add("matched");
-
     matchedPairs++;
-    matchesDisplay.textContent = matchedPairs;
+    matchesDisplay.textContent = `${matchedPairs}/${emojis.length}`;
     flippedCards = [];
 
-    // Sjekk om spillet er vunnet
     if (matchedPairs === emojis.length) {
       showWin();
     }
   } else {
-    // Vent litt, så snu tilbake
     setTimeout(() => {
       card1.textContent = "";
       card2.textContent = "";
@@ -115,18 +107,12 @@ function checkMatch() {
   }
 }
 
-// 🏆 Seier!
+// 🏆 Seier
 function showWin() {
   winMessage.classList.remove("hidden");
-
-  if (winSound) {
-    winSound.currentTime = 0;
-    winSound.play().catch(() => {});
-  }
-
-  // Legg til blink-animasjon
   winMessage.style.animation = "glow 1.2s infinite alternate";
 }
 
 // 🚀 Start første runde
+difficultySelect.value = "lett";
 startGame();
