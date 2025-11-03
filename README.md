@@ -34,12 +34,14 @@
 ---
 
 ## 📁 Filstruktur / File structure
+```sh
 /emoji-arcade
 │
 ├─ index.html ← Hovedfil / Main HTML
 ├─ style.css ← All styling / All styling (grid, cards, buttons, animations)
 ├─ app.js ← Spill-logikk / Game logic
 └─ README.md
+```
 
 ---
 
